@@ -1,0 +1,12 @@
+mysql:
+    host: host.com
+    user: user
+    passwd: pass
+    db: database
+    port: 3306
+ssql:
+    host: host.com
+    user: user
+    passwd: passwd
+    db: db
+    port: 3306
