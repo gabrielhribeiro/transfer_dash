@@ -2,8 +2,7 @@ import yaml
 import mysql.connector
 import pymssql
 
-
-#tool to help connection between databases.
+# tool to help connection between databases.
 
 class ConnectionsDB:
     def __init__(self):
@@ -11,7 +10,6 @@ class ConnectionsDB:
         self.conf_get()
         self.dataMap = []
         self.sec = []
-        self.conf_print()
         self.Mysql_Connection()
         self.Sql_Connection()
 
@@ -23,19 +21,21 @@ class ConnectionsDB:
                 print(exc)
         return self.sec
 
-    def conf_print(self):
-        return print(self.conf_get()['mysql']['host'])
-
     def Mysql_Connection(self):
-        mysql.connector.connect(host=self.conf_get()['mysql']['host'], user=self.conf_get()['mysql']['user'],
-                                password=self.conf_get()['mysql']['passwd'], database=self.conf_get()['mysql']['db'],
-                                port=self.conf_get()['mysql']['port'])
+        mysql.connector.connect(host=self.conf_get()['databases_configs']['mysql']['connection']['host'],
+                                user=self.conf_get()['databases_configs']['mysql']['connection']['user'],
+                                password=self.conf_get()['databases_configs']['mysql']['connection']['passwd'],
+                                database=self.conf_get()['databases_configs']['mysql']['connection']['db'],
+                                port=self.conf_get()['databases_configs']['mysql']['connection']['port'])
 
     def Sql_Connection(self):
-        pymssql.connect(host=self.conf_get()['ssql']['host'], user=self.conf_get()['ssql']['user'],
-                        password=self.conf_get()['ssql']['passwd'], database=self.conf_get()['ssql']['db'],
-                        port=self.conf_get()['ssql']['port'], as_dict=self.conf_get()['ssql']['as_dict'],
-                        login_timeout=self.conf_get()['ssql']['login_timeout'])
+        pymssql.connect(host=self.conf_get()['databases_configs']['ssql']['connection']['host'],
+                        user=self.conf_get()['databases_configs']['ssql']['connection']['user'],
+                        password=self.conf_get()['databases_configs']['ssql']['connection']['passwd'],
+                        database=self.conf_get()['databases_configs']['ssql']['connection']['db'],
+                        port=self.conf_get()['databases_configs']['ssql']['connection']['port'],
+                        as_dict=self.conf_get()['databases_configs']['ssql']['connection']['as_dict'],
+                        login_timeout=self.conf_get()['databases_configs']['ssql']['connection']['login_timeout'])
 
 if __name__ == '__main__':
     ConnectionsDB()
