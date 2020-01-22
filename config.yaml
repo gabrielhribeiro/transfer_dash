@@ -10,3 +10,5 @@ ssql:
     passwd: passwd
     db: db
     port: 3306
+    as_dict: Ture
+    login_timeout : 20
