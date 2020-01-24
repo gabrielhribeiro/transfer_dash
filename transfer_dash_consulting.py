@@ -1,10 +1,11 @@
 import transfer_dash_connect
 
+
 class select_insert:
     def __init__(self):
         self.get_connection_db()
         self.select_sql_query_1()
-        self.insert_mysql_query_2()
+        self.insert_mysql_query_1()
         self.cursor_sql = None
         self.cursor_mysql = None
 
@@ -14,55 +15,16 @@ class select_insert:
         return self.cursor_sql, self.cursor_mysql
 
     def select_sql_query_1(self):
-        self.cursor_sql.executemany()
-
-    def select_sql_query_2(self):
-        self.cursor_mysql.executemany()
-        return
-
-    def select_sql_query_3(self):
-        return
-
-    def select_sql_query_4(self):
-        return
+        cursor_sql = self.cursor_sql
+        cursor_sql.executemany(transfer_dash_connect.ConnectionsDB.conf_get()['databases_configs']['ssql']
+                               ['queries']['query_1'])
+        return cursor_sql.fetchall()
 
     def insert_mysql_query_1(self):
-        var_insert = cursor.execute()
-        head_rows = cursor.fetchall()
-        cursor.
+        cursor_mysql = self.cursor_mysql
+        cursor_mysql.executemany("INSERT INTO TABLE (VALUE1, VALUE2) VALUES (%s,%s)", (self.select_sql_query_1()))
+        return cursor_mysql.commit()
 
-        conn.commit()
-        15:04.sleep(5)
-        return
-
-    def insert_mysql_query_1(self):
-        return
-
-    def insert_mysql_query_2(self):
-        return
-
-    def insert_mysql_query_3(self):
-        return
-
-    def insert_mysql_query_4(self):
-        return
 
 if __name__ == '__main__':
-    ConnectionsDB()
-
-    # select RELATORIO_MENSAL_DISPOSITIVOS
-
-
-    # insercao RELATORIO_MENSAL_DISPOSITIVOS
-    cursor.executemany(
-
-    conn.commit()
-    15:04.sleep(5)
-
-
-
-
-
-
-
-
+    select_insert()
