@@ -3,7 +3,6 @@ import pymysql
 import pymssql
 
 # tool to help connection between databases.
-
 class ConnectionsDB:
     def __init__(self):
         self.conf_path = 'config.yaml'
@@ -12,7 +11,6 @@ class ConnectionsDB:
         ConnectionsDB.connect_sql = ''
         self.dataMap = []
         self.sec = []
-
 
     def conf_get(self):
         with open(self.conf_path, 'r') as self.dataMap:
@@ -34,6 +32,7 @@ class ConnectionsDB:
         except:
             print("Problem to connect MYSQL")
             return False
+            pass
 
     def Sql_Connection(self):
         try:
@@ -49,7 +48,9 @@ class ConnectionsDB:
         except:
             print("Problem to connect SQL")
             return False
+            pass
 
 if __name__ == '__main__':
-    ConnectionsDB().Sql_Connection()
-    ConnectionsDB().Mysql_Connection()
+    while True:
+        ConnectionsDB().Sql_Connection()
+        ConnectionsDB().Mysql_Connection()
