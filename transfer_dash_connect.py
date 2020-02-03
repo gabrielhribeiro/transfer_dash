@@ -1,8 +1,10 @@
 import yaml
 import pymysql
 import pymssql
+from datetime import datetime
 
-# tool to help connection between databases.
+
+# classs to help connection between databases.
 class ConnectionsDB:
     def __init__(self):
         self.conf_path = 'config.yaml'
@@ -12,14 +14,35 @@ class ConnectionsDB:
         self.dataMap = []
         self.sec = []
 
-    def conf_get(self):
-        with open(self.conf_path, 'r') as self.dataMap:
-            try:
-                self.sec = yaml.safe_load(self.dataMap)
-            except yaml.YAMLError as exc:
-                print(exc)
-        return self.sec
+    #log function
+    def registrarLog(self, registroLog):
+        try:
+            #
+            now = datetime.today().strftime('%d/%m/%Y %H:%M')
+            textoFormatado = "[" + now + "] - " + registroLog + "\n"
 
+            # Gerando arquivo .txt
+            with open("log_transferdash.txt", "a") as myfile:
+                myfile.write(textoFormatado)
+            myfile.close()
+            return True
+        except Exception as e:
+            print("Error to register the log: " + e)
+            return False
+
+    #get conf function
+    def conf_get(self):
+        try:
+            with open(self.conf_path, 'r') as self.dataMap:
+                try:
+                    self.sec = yaml.safe_load(self.dataMap)
+                except yaml.YAMLError as exc:
+                    print(exc)
+            return self.sec
+        except:
+            self.registrarLog("Problem to read config file, please verify, config.yaml")
+
+    #mysql config function
     def Mysql_Connection(self):
         try:
             self.connect_mysql = pymysql.connect(
@@ -30,10 +53,11 @@ class ConnectionsDB:
                                         port=self.conf_get()['databases_configs']['mysql']['connection']['port'])
             return self.connect_mysql.cursor(), self.connect_mysql
         except:
-            print("Problem to connect MYSQL")
+            self.registrarLog("Problem to connect MYSQL")
             return False
             pass
 
+    #SQL config function
     def Sql_Connection(self):
         try:
             self.connect_sql = pymssql.connect(host=self.conf_get()['databases_configs']['ssql']['connection']['host'],
@@ -46,7 +70,7 @@ class ConnectionsDB:
                                           'login_timeout'])
             return self.connect_sql.cursor(as_dict=False), self.connect_sql
         except:
-            print("Problem to connect SQL")
+            self.registrarLog("Problem to connect SQL")
             return False
             pass
 
