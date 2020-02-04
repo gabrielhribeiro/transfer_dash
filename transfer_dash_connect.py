@@ -46,11 +46,11 @@ class ConnectionsDB:
     def Mysql_Connection(self):
         try:
             self.connect_mysql = pymysql.connect(
-                                        host=self.conf_get()['databases_configs']['mysql']['connection']['host'],
-                                        user=self.conf_get()['databases_configs']['mysql']['connection']['user'],
-                                        password=self.conf_get()['databases_configs']['mysql']['connection']['passwd'],
-                                        db=self.conf_get()['databases_configs']['mysql']['connection']['db'],
-                                        port=self.conf_get()['databases_configs']['mysql']['connection']['port'])
+                host=self.conf_get()['databases_configs']['mysql']['connection']['host'],
+                user=self.conf_get()['databases_configs']['mysql']['connection']['user'],
+                password=self.conf_get()['databases_configs']['mysql']['connection']['passwd'],
+                db=self.conf_get()['databases_configs']['mysql']['connection']['db'],
+                port=self.conf_get()['databases_configs']['mysql']['connection']['port'])
             return self.connect_mysql.cursor(), self.connect_mysql
         except:
             self.registrarLog("Problem to connect MYSQL")
@@ -61,13 +61,13 @@ class ConnectionsDB:
     def Sql_Connection(self):
         try:
             self.connect_sql = pymssql.connect(host=self.conf_get()['databases_configs']['ssql']['connection']['host'],
-                                      user=self.conf_get()['databases_configs']['ssql']['connection']['user'],
-                                      password=self.conf_get()['databases_configs']['ssql']['connection']['passwd'],
-                                      database=self.conf_get()['databases_configs']['ssql']['connection']['db'],
-                                      port=self.conf_get()['databases_configs']['ssql']['connection']['port'],
-                                      as_dict=self.conf_get()['databases_configs']['ssql']['connection']['as_dict'],
-                                      login_timeout=self.conf_get()['databases_configs']['ssql']['connection'][
-                                          'login_timeout'])
+                                               user=self.conf_get()['databases_configs']['ssql']['connection']['user'],
+                                               password=self.conf_get()['databases_configs']['ssql']['connection']['passwd'],
+                                               database=self.conf_get()['databases_configs']['ssql']['connection']['db'],
+                                               port=self.conf_get()['databases_configs']['ssql']['connection']['port'],
+                                               as_dict=self.conf_get()['databases_configs']['ssql']['connection']['as_dict'],
+                                               login_timeout=self.conf_get()['databases_configs']['ssql']['connection'][
+                                                   'login_timeout'])
             return self.connect_sql.cursor(as_dict=False), self.connect_sql
         except:
             self.registrarLog("Problem to connect SQL")
@@ -75,6 +75,5 @@ class ConnectionsDB:
             pass
 
 if __name__ == '__main__':
-    while True:
-        ConnectionsDB().Sql_Connection()
-        ConnectionsDB().Mysql_Connection()
+    print(ConnectionsDB().Sql_Connection())
+    print(ConnectionsDB().Mysql_Connection())

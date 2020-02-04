@@ -5,20 +5,19 @@ import time
 # class to select, insert and organize schedule between databases.
 class select_insert:
     def __init__(self):
-        self.ConnectionsDB = transfer_dash_connect.ConnectionsDB()
-        self.registrarLog = transfer_dash_connect.ConnectionsDB.registrarLog
+        self.registrarLog = transfer_dash_connect.ConnectionsDB().registrarLog
         try:
-            self.cursor_sql,   self.con_sql = transfer_dash_connect.ConnectionsDB.Sql_Connection()
+            self.cursor_sql,   self.con_sql = transfer_dash_connect.ConnectionsDB().Sql_Connection()
         except:
             self.registrarLog("Error to declare Cursor_sql and con_sql, please verify the connections")
         pass
         try:
-            self.cursor_mysql, self.con_mysql = transfer_dash_connect.ConnectionsDB.Mysql_Connection()
+            self.cursor_mysql, self.con_mysql = transfer_dash_connect.ConnectionsDB().Mysql_Connection()
         except:
             self.registrarLog("Error to declare Cursor_mysql and con_mysql, please verify the connections")
         pass
         try:
-            self.conf_get = transfer_dash_connect.ConnectionsDB.conf_get()
+            self.conf_get = transfer_dash_connect.ConnectionsDB().conf_get()
         except:
             self.registrarLog("Error to declare variables, please verify the connections")
         pass
@@ -37,7 +36,7 @@ class select_insert:
         if select_insert().select_sql_query_1() != False:
             try:
                 self.cursor_mysql.executemany(self.conf_get['databases_configs']['mysql']['queries']['query_1']['query'],
-                                          (select_insert().select_sql_query_1()))
+                                              (select_insert().select_sql_query_1()))
                 self.registrarLog("insert")
                 return self.con_mysql.commit()
             except:
@@ -52,10 +51,12 @@ if __name__ == '__main__':
     if insert_class.insert_mysql_query_1!= False:
         #schedule to insert each rule mysql_1 (insert_mysql_query_1)
         schedule.every(insert_class.conf_get['databases_configs']['mysql']['queries']['query_1']['schedule']) \
-                                                .seconds.do(insert_class.insert_mysql_query_1)
+            .seconds.do(insert_class.insert_mysql_query_1)
+
+        print(insert_class.conf_get['databases_configs']['mysql']['queries']['query_1']['schedule'])
         insert_class.registrarLog("schedule for 60sec")
     else:
-        insert_class.registrarLog("Error to schedule")
+        insert_class.registrarLog("Error to schedule query_1")
         pass
 
     while True:
